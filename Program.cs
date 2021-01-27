@@ -35,26 +35,26 @@ namespace CSharpClient
         {
             Console.WriteLine("Calling Go.HelloWorld");
             var result = Marshal.PtrToStringAnsi(HelloWorld());
-            Console.WriteLine("Answer " + result);
+            Console.WriteLine("Answer: " + result);
         }
 
         private static void TestHelloGalaxy()
         {
             Console.WriteLine("Calling Go.HelloGalaxy");
             var result = Marshal.PtrToStringAnsi(HelloGalaxy());
-            Console.WriteLine("Answer " + result);
+            Console.WriteLine("Answer: " + result);
         }
 
         private static void TestGetIssuerNonce()
         {
-            Console.WriteLine("Calling Go.HelloGalaxy");
+            Console.WriteLine("Calling Go.GenerateIssuerNonceB64");
             var result = Marshal.PtrToStringAnsi(GenerateIssuerNonceB64());
-            Console.WriteLine("Answer " + result);
+            Console.WriteLine("Answer: " + result);
         }
 
         private static void TestIssue()
         {
-            Console.WriteLine("Calling Go.HelloGalaxy");
+            Console.WriteLine("Calling Go.Issue");
 
             var issuerPkXml = "PkXml";
             var issuerSkXml = "SkXml";
@@ -63,7 +63,7 @@ namespace CSharpClient
 
             var result = Marshal.PtrToStringAnsi(Issue(issuerPkXml, issuerSkXml, issuerNonceB64, commitmentsJson));
 
-            Console.WriteLine("Answer " + result);
+            Console.WriteLine("Answer:: " + result);
         }
     }
 }
