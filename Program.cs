@@ -7,6 +7,12 @@ namespace CSharpClient
     // extern char* HelloWorld(char* hello);
     class Program
     {
+        private struct GoString
+        {
+            public IntPtr p;
+            public long n;
+        }
+
         [DllImport("helloworld.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr HelloWorld();
 
@@ -15,10 +21,9 @@ namespace CSharpClient
 
         [DllImport("helloworld.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr GenerateIssuerNonceB64();
-
-
+        
         [DllImport("helloworld.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr Issue(string issuerPkXml, string issuerSkXml, string issuerNonceB64, string commitmentsJson);
+        static extern IntPtr Issue(GoString issuerPkXml, GoString issuerSkXml, GoString issuerNonceB64, GoString commitmentsJson);
         
         static void Main(string[] args)
         {
@@ -56,14 +61,23 @@ namespace CSharpClient
         {
             Console.WriteLine("Calling Go.Issue");
 
-            var issuerPkXml = "PkXml";
-            var issuerSkXml = "SkXml";
-            var issuerNonceB64 = "NONCE";
-            var commitmentsJson = "{ commitments: true }";
-
+            var issuerPkXml = ToGoString("PkXml");
+            var issuerSkXml = ToGoString("SkXml");
+            var issuerNonceB64 = ToGoString("NONCE");
+            var commitmentsJson = ToGoString("{ commitments: true }");
+            
             var result = Marshal.PtrToStringAnsi(Issue(issuerPkXml, issuerSkXml, issuerNonceB64, commitmentsJson));
 
-            Console.WriteLine("Answer:: " + result);
+            Console.WriteLine("Answer: " + result);
+        }
+
+        private static GoString ToGoString(string str)
+        {
+            return new GoString
+            {
+                p = Marshal.StringToHGlobalAnsi(str),
+                n = str.Length
+            };
         }
     }
 }

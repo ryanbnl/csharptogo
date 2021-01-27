@@ -22,15 +22,15 @@ func HelloGalaxy() *C.char {
 
 //export GenerateIssuerNonceB64
 func GenerateIssuerNonceB64() *C.char {
-	issuerNonceB64 := "Do the twist and shake"
+	issuerNonceB64 := "GenerateIssuerNonceB64 has generated!"
 	return C.CString(issuerNonceB64)
 }
 
 //export Issue
-func Issue(issuerPkXml, issuerSkXml, issuerNonceB64, commitmentsJson *C.char) *C.char {
+func Issue(issuerPkXml, issuerSkXml, issuerNonceB64, commitmentsJson string) *C.char {
 	fmt.Println(issuerPkXml)
 	fmt.Println(issuerSkXml)
 	fmt.Println(issuerNonceB64)
 	fmt.Println(commitmentsJson)
-	return C.CString("This darkness, it's smothering me")
+	return C.CString("Issuer has issued!")
 }
